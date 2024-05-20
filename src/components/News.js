@@ -67,6 +67,14 @@ export class News extends Component {
           
     
     }
+    async componentDidMount(){
+        let url="https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=308b8ba49f3b4af481a5807185fd27ab";
+        let data=await fetch(url);
+        let parsedData=await data.json()
+        console.log(parsedData);
+        this.setState({articles:parsedData.articles})
+
+    }
   render() {
     return (
       <div className="container my-2"> 
@@ -74,7 +82,7 @@ export class News extends Component {
         <div className='row' >
           {this.state.articles.map((elements)=>{
            return  <div className='col-md-3'key={elements.url}>
-            <NewsItem  title={elements.title.slice(0,30)} description={elements.description.slice(0,88)} imageUrl={elements.urlToImage} newsUrl={elements.url}/>
+            <NewsItem  title={elements.title?elements.title.slice(0,30):" "} description={elements.description?elements.description.slice(0,88):" "} imageUrl={elements.urlToImage} newsUrl={elements.url}/>
             </div>
           })}  
         
